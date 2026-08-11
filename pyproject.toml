@@ -1,0 +1,19 @@
+[project]
+name = "roguelike"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "numpy>=2.5.2",
+    "tcod>=21.2.1",
+    "tcod-camera>=1.0.1",
+    "tcod-ecs>=5.5.0",
+]
+
+[project.scripts]
+roguelike = "roguelike:main"
+
+[build-system]
+requires = ["uv_build>=0.12.3,<0.13.0"]
+build-backend = "uv_build"
