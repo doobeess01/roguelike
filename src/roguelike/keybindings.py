@@ -1,7 +1,7 @@
 from tcod.event import KeySym as K
 
 from .state import State
-from . import states
+from .states import MainMenu, Game
 
 
 def name(sym: K):
@@ -27,13 +27,13 @@ for direction, syms in DIRECTIONS_TO_KEYSYMS.items():
 KEYBINDINGS: dict[type[State], dict[str, str]] = {}
 
 
-KEYBINDINGS[states.MainMenu] = {
-    name(K.RETURN): states.MainMenu.BEGIN,
+KEYBINDINGS[MainMenu] = {
+    name(K.RETURN): MainMenu.BEGIN,
 }
 
 
-KEYBINDINGS[states.Game] = {
-    name(K.PERIOD): states.Game.WAIT,
+KEYBINDINGS[Game] = {
+    name(K.PERIOD): Game.WAIT,
 }
 # Add movement keybindings
-KEYBINDINGS[states.Game] |= {sym: states.Game.MOVE(direction) for sym, direction in KEYNAMES_TO_DIRECTIONS.items()}
+KEYBINDINGS[Game] |= {sym: Game.MOVE(direction) for sym, direction in KEYNAMES_TO_DIRECTIONS.items()}
