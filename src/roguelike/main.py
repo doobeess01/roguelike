@@ -1,17 +1,15 @@
 import tcod
 
-import g
+from . import g
+from .state_manager import StateManager
+from . import states
 
-
-def handle_event(event: tcod.event.Event):
-    if isinstance(event, tcod.event.Quit):
-        raise SystemExit()
+from .handle_event import handle_event
 
 
 def draw():
-    g.console.print(1, 1, "Hello, world!")
-    g.console.print(3,3,"@")
-
+    g.console.clear()
+    g.state_manager.state.draw()
     g.context.present(g.console)
 
 
@@ -19,15 +17,19 @@ def main() -> None:
     screen_width = 80
     screen_height = 50
 
-    g.console = tcod.console.Console(screen_width, screen_height, order="F")
+    g.console = tcod.console.Console(screen_width, screen_height)
 
     tileset = tcod.tileset.load_tilesheet("assets/Alloy_curses_12x12.png", 16, 16, tcod.tileset.CHARMAP_CP437)
+
+    g.state_manager = StateManager(states.MainMenu())
 
     with tcod.context.new(console=g.console, tileset=tileset, title="Roguelike", vsync=True) as g.context:
         while True:
             
             for event in tcod.event.wait():
                 handle_event(event)
+
+            draw()
 
 
 if __name__ == "__main__":
