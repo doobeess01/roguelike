@@ -1,6 +1,9 @@
 from collections.abc import Callable
 
 from .. import g
+from ..tags import IsIn
+from ..components import MapShape, Tiles
+from ..tiles import TILE_DATA
 from ..state import State
 from ..action import Action
 from ..actions import Move, Wait
@@ -32,5 +35,9 @@ class Game(State):
         }
 
     def draw(self):
+        map_ = g.player.relation_tag[IsIn]
+        map_shape = map_.components[MapShape]
+        g.console.rgb[:map_shape.height, :map_shape.width] = TILE_DATA[map_.components[Tiles]]["graphic"]
+
         player_position = g.player.components[Position]
         g.console.print(player_position.x, player_position.y, '@')
