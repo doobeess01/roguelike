@@ -5,5 +5,5 @@ from ..position import Position
 
 
 class Move(Directional):
-    def __call__(self, actor: Entity):
+    def execute(self, actor: Entity):
         actor.components[Position] += self.direction

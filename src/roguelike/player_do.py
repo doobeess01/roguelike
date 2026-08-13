@@ -1,14 +1,11 @@
-from typing import TYPE_CHECKING
-from collections.abc import Callable
-
-if TYPE_CHECKING:
-    from tcod.ecs import Entity
-
 from . import g
+from .action import Action, Impossible
 
 
 class PlayerDo:
-    def __init__(self, player_action: Callable[[Entity], None]):
+    def __init__(self, player_action: Action):
         self.player_action = player_action
     def __call__(self):
-        self.player_action(g.player)
+        feedback = self.player_action(g.player)
+        if isinstance(feedback, Impossible):
+            print(feedback.message)
