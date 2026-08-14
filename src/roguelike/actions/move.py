@@ -4,16 +4,15 @@ from ..action import ActionCheckFeedback, Success, Impossible
 
 from .directional import Directional
 from ..components import Position
-from ..components import Tiles
 from ..tags import IsIn
-from ..tiles import TILE_DATA
+from ..map_tools import get_tile
 
 
 class Move(Directional):
     def check(self, actor: Entity) -> ActionCheckFeedback:
-        tiles = actor.relation_tag[IsIn].components[Tiles]
+        map_ = actor.relation_tag[IsIn]
         dest = actor.components[Position] + self.direction
-        if TILE_DATA["walkable"][tiles[dest.y,dest.x]]:
+        if get_tile(map_, dest.x, dest.y)["walkable"]:
             return Success()
         return Impossible("You can't walk through walls.")
 

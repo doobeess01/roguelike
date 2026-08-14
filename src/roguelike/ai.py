@@ -8,9 +8,9 @@ import random
 from .action import Action
 from .actions import Move, Wait
 from .vector import Vector
-from .components import Position, Tiles
+from .components import Position
 from .tags import IsIn
-from .tiles import TILE_DATA
+from .map_tools import get_tile
 
 
 def ai_choose_action(actor: Entity) -> Action:
@@ -23,7 +23,7 @@ def ai_choose_action(actor: Entity) -> Action:
         direction = random.choice(possible_movements)
         possible_movements.remove(direction)
         dest = actor.components[Position] + direction
-        if TILE_DATA["walkable"][map_.components[Tiles][dest.y, dest.x]]:
+        if get_tile(map_, dest.x, dest.y)["walkable"]:
             action = Move(direction)
         elif len(possible_movements) == 0:
             action = Wait()
