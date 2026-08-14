@@ -3,7 +3,7 @@ from tcod.ecs import Entity
 from ..action import ActionCheckFeedback, Success, Impossible
 
 from .directional import Directional
-from ..position import Position
+from ..components import Position
 from ..components import Tiles
 from ..tags import IsIn
 from ..tiles import TILE_DATA
