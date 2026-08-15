@@ -1,20 +1,23 @@
 from tcod.ecs import Entity
 
-from ..action import ActionCheckFeedback, Success, Impossible
-
+from ..action import Impossible
 from .directional import Directional
 from ..components import Position
-from ..tags import IsIn
 from ..map_tools import get_tile
+from ..entity_tools import get_entities_at
+from ..tags import BlocksMovement
 
 
 class Move(Directional):
-    def check(self, actor: Entity) -> ActionCheckFeedback:
-        map_ = actor.relation_tag[IsIn]
-        dest = actor.components[Position] + self.direction
-        if get_tile(map_, dest.x, dest.y)["walkable"]:
-            return Success()
-        return Impossible("You can't walk through walls.")
+    class BlockedByTile(Impossible): pass
+    class BlockedByEntity(Impossible): pass
 
-    def execute(self, actor: Entity):
+    def check(self, actor: Entity):
+        dest = actor.components[Position] + self.direction
+        if not get_tile(dest)["walkable"]:
+            return Move.BlockedByTile()
+        elif get_entities_at(dest).all_of(tags=[BlocksMovement]):
+            return Move.BlockedByEntity()
+
+    def _execute(self, actor: Entity):
         actor.components[Position] += self.direction

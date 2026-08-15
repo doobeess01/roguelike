@@ -1,32 +1,38 @@
 import tcod.ecs
 
 from . import g
-from .components import Position, Graphic
-from .tags import IsIn, IsActor
+from .components import Position, Graphic, Name, HP, Attack
+from .tags import IsActor, IsFighter, BlocksMovement
 from .map_init import generate_map
+from . import callbacks
 
 
 def initialize_world():
     g.registry = tcod.ecs.Registry()
+    callbacks.register_all()
+
+    map_ = generate_map()
 
     # Add player
     g.player = g.registry.new_entity(
         components={
-            Position: Position(5,5),
-            Graphic: Graphic(ord('@'),(255,255,255))
+            Name: 'player',
+            Position: Position(5,5, map_),
+            Graphic: Graphic(ord('@'),(255,255,255)),
+            HP: 10,
+            Attack: 2,
         }, 
-        tags={IsActor}
+        tags={IsActor, IsFighter, BlocksMovement}
     )
 
     # Add an NPC
-    kobold = g.registry.new_entity(
+    g.registry.new_entity(
         components={
-            Position: Position(15,15),
+            Name: 'kobold',
+            Position: Position(15,15, map_),
             Graphic: Graphic(ord('K'),(240,120,30)),
+            HP: 6,
+            Attack: 1,
         }, 
-        tags={IsActor}
+        tags={IsActor, IsFighter, BlocksMovement}
     )
-
-    map_ = generate_map()
-    g.player.relation_tag[IsIn] = map_
-    kobold.relation_tag[IsIn] = map_

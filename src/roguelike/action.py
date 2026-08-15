@@ -4,28 +4,21 @@ if TYPE_CHECKING:
     from tcod.ecs import Entity
 
 
-class ActionCheckFeedback:
+class Impossible:
+    '''Base class for action *attempt* failures (for example, a missed melee attack would NOT return Impossible, while a melee attack to a nonexistent target would)'''
     pass
-
-
-class Success(ActionCheckFeedback):
-    pass
-
-
-class Impossible(ActionCheckFeedback):
-    def __init__(self, message: str):
-        self.message = message
 
 
 class Action:
-    def __call__(self, actor: Entity):
-        if isinstance(feedback := self.check(actor), Success):
-            self.execute(actor)
-        return feedback
-    
-    def check(self, actor: Entity) -> ActionCheckFeedback:
-        '''Check whether the action is currently possible to complete. Returns an ActionCheckFeedback object.'''
-        return Success()
-    
-    def execute(self, actor: Entity):
+    def check(self, actor: Entity) -> Impossible | None:
         ...
+
+    def _execute(self, actor: Entity):
+        ...
+
+    def __call__(self, actor: Entity) -> Impossible | None:
+        if (failure := self.check(actor)) is None:
+            self._execute(actor)
+
+        return failure
+        
