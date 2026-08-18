@@ -3,7 +3,7 @@ import tcod
 from . import g
 from .state_manager import StateManager
 from . import states
-from .handle_event import handle_event
+from .handle_tcod_event import handle_tcod_event
 from .world_init import initialize_world
 
 
@@ -29,7 +29,7 @@ def main() -> None:
         while True:
             
             for event in tcod.event.wait():
-                handle_event(event)
+                handle_tcod_event(event)
 
             draw()
 

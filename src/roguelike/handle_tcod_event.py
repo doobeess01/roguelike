@@ -4,7 +4,7 @@ from . import g
 from .keybindings import KEYBINDINGS
 
 
-def handle_event(event: Event):
+def handle_tcod_event(event: Event):
     match event:
         case Quit():
             raise SystemExit
