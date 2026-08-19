@@ -9,7 +9,9 @@ from ..events import Damage
 
 
 class Melee(Directional):
-    class NoFighterThere(Impossible): pass
+    class NoFighterThere(Impossible):
+        def report(self):
+            print('No fighter there.')
 
     def check(self, actor: Entity) -> Impossible | None:
         dest = actor.components[Position] + self.direction

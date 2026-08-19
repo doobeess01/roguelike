@@ -8,8 +8,8 @@ class PlayerDo:
         self.player_action = player_action
 
     def __call__(self):
-        feedback = self.player_action(g.player)
-        if isinstance(feedback, Impossible):
-            print(feedback.message)
+        failure: Impossible | None = self.player_action(g.player)
+        if failure is not None:
+            failure.report()
 
         handle_npc_turns()

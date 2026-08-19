@@ -8,7 +8,8 @@ from . import g
 
 class Impossible:
     '''Base class for action *attempt* failures (for example, a missed melee attack would NOT return Impossible, while a melee attack to a nonexistent target would)'''
-    pass
+    def report(self):
+        ...
 
 
 class Action:
