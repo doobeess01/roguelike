@@ -4,3 +4,6 @@ from typing import Final
 IsActor: Final = 'IsActor'
 IsFighter: Final = 'IsFighter'
 BlocksMovement: Final = 'BlocksMovement'
+
+# AI types
+IsHostile: Final = 'IsHostile'

@@ -22,10 +22,14 @@ class Position:
     def __add__(self, other: Any):
         if isinstance(other, Vector):
             return Position(self.x+other.x, self.y+other.y, self.map_)
+        if isinstance(other, Position):
+            return Vector(self.x+other.x, self.y+other.y)
         return NotImplemented
     def __sub__(self, other: Any):
         if isinstance(other, Vector):
             return Position(self.x-other.x, self.y-other.y, self.map_)
+        if isinstance(other, Position):
+            return Vector(self.x-other.x, self.y-other.y)
         return NotImplemented
 
 

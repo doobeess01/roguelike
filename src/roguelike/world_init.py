@@ -2,7 +2,7 @@ import tcod.ecs
 
 from . import g
 from .components import Position, Graphic, Name, HP, Attack
-from .tags import IsActor, IsFighter, BlocksMovement
+from .tags import IsActor, IsFighter, BlocksMovement, IsHostile
 from .map_init import generate_map
 from . import callbacks
 
@@ -29,10 +29,10 @@ def initialize_world():
     g.registry.new_entity(
         components={
             Name: 'kobold',
-            Position: Position(15,15, map_),
+            Position: Position(15,5, map_),
             Graphic: Graphic(ord('K'),(240,120,30)),
             HP: 6,
             Attack: 1,
         }, 
-        tags={IsActor, IsFighter, BlocksMovement}
+        tags={IsActor, IsFighter, BlocksMovement, IsHostile}
     )
