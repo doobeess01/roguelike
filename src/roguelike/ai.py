@@ -17,7 +17,7 @@ from .tags import IsHostile
 def ai_choose_action(actor: Entity) -> Action:
     action: Action | None = None
 
-    if IsHostile:
+    if IsHostile in actor.tags:
         actor_position = actor.components[Position]
         path_to_target = find_path_to(start=actor_position, end=g.player.components[Position])
         if path_to_target:
@@ -30,7 +30,7 @@ def ai_choose_action(actor: Entity) -> Action:
                     action = Move(direction)
 
     else:
-        possible_movements = [Vector(x, y) for x in (-1,1) for y in (-1, 1)]
+        possible_movements = [Vector(x, y) for x in (-1,0,1) for y in (-1,0,1) if (x,y) != (0,0)]
 
         while len(possible_movements) > 0:
             direction = random.choice(possible_movements)
