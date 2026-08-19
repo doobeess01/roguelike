@@ -32,7 +32,7 @@ class EventBus:
 
         listeners = self._listeners[event_type]
         listeners.append(listener)
-        listeners.sort(key=lambda listener: listener.priority, reverse=True)
+        listeners.sort(key=lambda listener: listener.priority)
 
     def emit(self, event: Event) -> None:
         """Add an event to the end of the queue."""

@@ -2,7 +2,7 @@ import tcod.ecs
 
 from . import g
 from .components import Position, Graphic, Name, HP, Attack
-from .tags import IsActor, IsFighter, BlocksMovement, IsHostile
+from .tags import IsActor, BlocksMovement, IsHostile
 from .map_init import generate_map
 from . import callbacks
 
@@ -22,7 +22,7 @@ def initialize_world():
             HP: 10,
             Attack: 2,
         }, 
-        tags={IsActor, IsFighter, BlocksMovement}
+        tags={IsActor, BlocksMovement}
     )
 
     # Add an NPC
@@ -34,5 +34,5 @@ def initialize_world():
             HP: 6,
             Attack: 1,
         }, 
-        tags={IsActor, IsFighter, BlocksMovement, IsHostile}
+        tags={IsActor, BlocksMovement, IsHostile}
     )
