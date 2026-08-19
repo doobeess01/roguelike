@@ -2,8 +2,9 @@ import tcod.ecs
 
 from . import g
 from .components import Position, Graphic, Name, HP, Attack
-from .tags import IsActor, BlocksMovement, IsHostile
+from .tags import IsPlayer, IsActor, BlocksMovement, IsHostile
 from .map_init import generate_map
+from .simulation import Simulation
 from . import callbacks
 
 
@@ -22,11 +23,11 @@ def initialize_world():
             HP: 10,
             Attack: 2,
         }, 
-        tags={IsActor, BlocksMovement}
+        tags={IsPlayer, IsActor, BlocksMovement}
     )
 
     # Add an NPC
-    g.registry.new_entity(
+    kobold = g.registry.new_entity(
         components={
             Name: 'kobold',
             Position: Position(15,5, map_),
@@ -36,3 +37,5 @@ def initialize_world():
         }, 
         tags={IsActor, BlocksMovement, IsHostile}
     )
+
+    g.simulation = Simulation([g.player, kobold])

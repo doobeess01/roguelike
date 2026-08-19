@@ -4,6 +4,9 @@ from collections.abc import Callable
 class State:
     actions: dict[str, Callable[[], None]]
 
+    def update(self):
+        pass
+
     def draw(self):
         ...
 

@@ -1,3 +1,4 @@
+from .. import g
 from ..events import Death
 from ..entity_tools import get_name
 
@@ -8,3 +9,4 @@ def report_death(death: Death):
 
 def clear_dead_entity(death: Death):
     death.entity.clear()
+    g.simulation.remove_actor(death.entity)

@@ -50,6 +50,9 @@ class Game(State):
             Game.MOVE('northwest'): Bump(Vector(-1,-1)),
         }
 
+    def update(self):
+        g.simulation.advance()
+
     def draw(self):
         map_ = g.player.components[Position].map_
         map_shape = map_.components[MapShape]

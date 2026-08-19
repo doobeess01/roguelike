@@ -34,6 +34,7 @@ def main() -> None:
             for event in tcod.event.wait():
                 handle_tcod_event(event)
 
+            g.state_manager.state.update()
             draw()
 
 

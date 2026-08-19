@@ -1,6 +1,5 @@
 from . import g
-from .action import Action, Impossible
-from .simulation import handle_npc_turns
+from .action import Action
 
 
 class PlayerDo:
@@ -8,8 +7,7 @@ class PlayerDo:
         self.player_action = player_action
 
     def __call__(self):
-        failure: Impossible | None = self.player_action(g.player)
-        if failure is not None:
+        if (failure := self.player_action.check(g.player)) is not None:
             failure.report()
-
-        handle_npc_turns()
+        else:
+            g.simulation.provide_action(self.player_action)
