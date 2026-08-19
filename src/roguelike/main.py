@@ -8,6 +8,9 @@ from .event_bus_init import initialize_event_bus
 from .world_init import initialize_world
 
 
+SCREEN_WIDTH, SCREEN_HEIGHT = 80, 50
+
+
 def draw():
     g.console.clear()
     g.state_manager.state.draw()
@@ -15,10 +18,7 @@ def draw():
 
 
 def main() -> None:
-    screen_width = 80
-    screen_height = 50
-
-    g.console = tcod.console.Console(screen_width, screen_height)
+    g.console = tcod.console.Console(SCREEN_WIDTH, SCREEN_HEIGHT)
 
     tileset = tcod.tileset.load_tilesheet("src/roguelike/assets/Alloy_curses_12x12.png", 16, 16, tcod.tileset.CHARMAP_CP437)
 

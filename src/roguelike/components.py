@@ -31,6 +31,9 @@ class Position:
         if isinstance(other, Position):
             return Vector(self.x-other.x, self.y-other.y)
         return NotImplemented
+    @property
+    def ij(self):
+        return (self.y, self.x)
 
 
 class Graphic(NamedTuple):
