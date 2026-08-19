@@ -5,7 +5,7 @@ from ..action import Impossible
 from .directional import Directional
 from ..components import Position, Attack
 from ..tags import IsFighter
-from .. import damage_types
+from ..events import Damage
 
 
 class Melee(Directional):
@@ -23,4 +23,4 @@ class Melee(Directional):
         dest = actor.components[Position] + self.direction
         target = list(g.registry.Q.all_of(tags=[dest, IsFighter]))[0]
         damage_amount = actor.components[Attack]
-        damage_types.Melee(amount=damage_amount, blame=actor)(target)
+        g.event_bus.emit(Damage(source=actor, target=target, amount=damage_amount))

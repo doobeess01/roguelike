@@ -5,8 +5,7 @@ if TYPE_CHECKING:
 
 from tcod.ecs import callbacks
 
-from .components import Position, HP
-from .combat_tools import die
+from .components import Position
 
 
 def on_position_changed(entity: Entity, old: Position | None, new: Position | None):
@@ -18,12 +17,5 @@ def on_position_changed(entity: Entity, old: Position | None, new: Position | No
         entity.tags.add(new.map_)
 
 
-def on_hp_changed(entity: Entity, old: int | None, new: int | None):
-    if new is not None:
-        if new <= 0:
-            die(entity)
-
-
 def register_all():
     callbacks.register_component_changed(component=Position)(on_position_changed)
-    callbacks.register_component_changed(component=HP)(on_hp_changed)
