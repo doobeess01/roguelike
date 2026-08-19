@@ -22,9 +22,6 @@ class Action:
     def __call__(self, actor: Entity) -> Impossible | None:
         if (failure := self.check(actor)) is not None:
             return failure
-        
+
         self._execute(actor)
         g.event_bus.process()
-
-        
-        

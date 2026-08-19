@@ -1,4 +1,5 @@
 from collections.abc import Callable
+import tcod.camera
 
 from .. import g
 from ..components import MapShape, Tiles
@@ -6,7 +7,7 @@ from ..tiles import TILE_DATA
 from ..state import State
 from ..action import Action
 from ..actions import Move, Wait, Melee
-from ..vector import Vector
+from ..vector import Vector, vector_from_tuple
 from ..components import Position, Graphic
 from ..player_do import PlayerDo 
 
@@ -54,11 +55,22 @@ class Game(State):
         g.simulation.advance()
 
     def draw(self):
-        map_ = g.player.components[Position].map_
+        player_pos = g.player.components[Position]
+
+        map_ = player_pos.map_
         map_shape = map_.components[MapShape]
-        g.console.rgb[:map_shape.height, :map_shape.width] = TILE_DATA[map_.components[Tiles]]["graphic"]
+
+        SCREEN_SHAPE = (30,30)
+
+        player_ij = (player_pos.y, player_pos.x)
+        camera_ij = tcod.camera.get_camera(SCREEN_SHAPE, player_ij)
+        screen_slice, world_slice = tcod.camera.get_slices(SCREEN_SHAPE, map_shape, camera_ij)
+
+        g.console.rgb[screen_slice] = TILE_DATA[map_.components[Tiles][world_slice]]["graphic"]
+
+        rendered_offset = vector_from_tuple(camera_ij, ij=True)
 
         for entity in g.registry.Q.all_of(components=[Position, Graphic]):
-            pos = entity.components[Position]
+            rendered_pos = entity.components[Position] - rendered_offset
             graphic = entity.components[Graphic]
-            g.console.rgb[pos.y, pos.x] = graphic
+            g.console.rgb[rendered_pos.y, rendered_pos.x] = graphic

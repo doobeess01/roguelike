@@ -4,8 +4,8 @@ from . import g
 from .components import MapShape, Tiles
 from .tiles import TILE_ID
 
-MAP_WIDTH: int = 30
-MAP_HEIGHT: int = 30
+MAP_WIDTH: int = 50
+MAP_HEIGHT: int = 50
 
 
 def generate_map():
