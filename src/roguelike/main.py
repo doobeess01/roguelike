@@ -4,7 +4,7 @@ from . import g
 from .state_manager import StateManager
 from . import states
 from .handle_tcod_event import handle_tcod_event
-from .event_bus_init import initialize_event_bus
+from .event_bus_init import get_event_bus
 from .world_init import initialize_world
 
 
@@ -24,7 +24,7 @@ def main() -> None:
 
     g.state_manager = StateManager(states.MainMenu())
 
-    initialize_event_bus() # Sets g.event_bus
+    g.event_bus = get_event_bus() # Sets g.event_bus
     initialize_world() # Sets g.registry (and g.player)
 
 

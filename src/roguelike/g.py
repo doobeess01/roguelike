@@ -6,6 +6,7 @@ if TYPE_CHECKING:
     from .state_manager import StateManager
     from .event_bus import EventBus
     from .simulation import Simulation
+    from .message_log import MessageLog
 
 console: tcod.console.Console
 context: tcod.context.Context
@@ -18,3 +19,5 @@ player: tcod.ecs.Entity
 event_bus: EventBus
 
 simulation: Simulation
+
+message_log: MessageLog

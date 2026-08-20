@@ -29,6 +29,9 @@ class Simulation:
             self._execute(actor, action)
             self.schedule.append(actor)
 
+    def add_actor(self, actor: Entity):
+        self.schedule.append(actor)
+
     def remove_actor(self, actor: Entity):
         self.schedule.remove(actor)
 

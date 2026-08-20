@@ -6,6 +6,7 @@ from .tags import IsPlayer, IsActor, BlocksMovement, IsHostile
 from .map_init import generate_map
 from .simulation import Simulation
 from . import callbacks
+from .message_log import MessageLog
 
 
 def initialize_world():
@@ -38,4 +39,8 @@ def initialize_world():
         tags={IsActor, BlocksMovement, IsHostile}
     )
 
-    g.simulation = Simulation([g.player, kobold])
+    g.simulation = Simulation()
+    g.simulation.add_actor(g.player)
+    g.simulation.add_actor(kobold)
+
+    g.message_log = MessageLog()

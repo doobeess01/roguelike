@@ -5,12 +5,13 @@ from ..action import Impossible
 from .directional import Directional
 from ..components import Position, Attack, HP
 from ..events import Damage
+from .. import colors
 
 
 class Melee(Directional):
     class NoFighterThere(Impossible):
         def report(self):
-            print('No fighter there.')
+            g.message_log.log('No fighter there.', *colors.messages.ACTION_IMPOSSIBLE)
 
     def check(self, actor: Entity) -> Impossible | None:
         dest = actor.components[Position] + self.direction

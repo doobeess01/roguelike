@@ -9,8 +9,16 @@ from ..components import Position, Graphic
 
 
 def main_game_render():
-    camera_ij = render_map((30, 30))
+    camera_ij = render_map((39, 60))  # Renders at 0-38 x, 0-59 y with C order
     render_entities(camera_ij)
+    render_message_log(0, 40, 10)
+    g.console.print(0,39,'─'*80)
+
+
+def render_message_log(x: int, y: int, rows: int):
+    messages = g.message_log.get_messages(rows)
+    for i, message in enumerate(messages):
+        g.console.print(x, y+i, message.text, fg=message.fg, bg=message.bg)
 
 
 def render_map(screen_shape: tuple[int, int]):

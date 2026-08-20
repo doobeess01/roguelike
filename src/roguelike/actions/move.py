@@ -5,12 +5,14 @@ if TYPE_CHECKING:
     from tcod.ecs import Entity
     import numpy as np
 
+from .. import g
 from ..action import Impossible
 from .directional import Directional
 from ..components import Position
 from ..map_tools import get_tile
 from ..entity_tools import get_name, get_entities_at
 from ..tags import BlocksMovement
+from .. import colors
 
 
 class Move(Directional):
@@ -19,14 +21,14 @@ class Move(Directional):
         tile: np.ndarray
 
         def report(self):
-            print(f"There's a {self.tile["name"]} in the way.")
+            g.message_log.log(f"There's a {self.tile["name"]} in the way.", *colors.messages.ACTION_IMPOSSIBLE)
 
     @dataclass
     class BlockedByEntity(Impossible):
         entity: Entity
 
         def report(self):
-            print(f"{get_name(self.entity)} is in the way.")
+            g.message_log.log(f"{get_name(self.entity)} is in the way.", *colors.messages.ACTION_IMPOSSIBLE)
 
     def check(self, actor: Entity):
         dest = self.dest(actor)
