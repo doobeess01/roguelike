@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from .tags import IsPlayer
+
 if TYPE_CHECKING:
     import tcod
     import tcod.ecs
@@ -8,13 +10,18 @@ if TYPE_CHECKING:
     from .simulation import Simulation
     from .message_log import MessageLog
 
+
 console: tcod.console.Console
 context: tcod.context.Context
 
 state_manager: StateManager
 
 registry: tcod.ecs.Registry
-player: tcod.ecs.Entity
+def player() -> tcod.ecs.Entity:
+    for entity in registry.Q.all_of(tags=[IsPlayer]):
+        return entity
+    else:
+        raise RuntimeError('No entity with IsPlayer tag!')
 
 event_bus: EventBus
 

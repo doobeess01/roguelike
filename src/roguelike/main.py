@@ -25,7 +25,7 @@ def main() -> None:
     g.state_manager = StateManager(states.MainMenu())
 
     g.event_bus = get_event_bus() # Sets g.event_bus
-    initialize_world() # Sets g.registry (and g.player)
+    initialize_world() # Sets g.registry
 
 
     with tcod.context.new(console=g.console, tileset=tileset, title="Roguelike", vsync=True) as g.context:

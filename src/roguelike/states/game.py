@@ -19,7 +19,7 @@ class Bump(ActionDispatch):
         self.direction = direction
 
     def __call__(self):
-        if not isinstance((melee_action := Melee(self.direction)).check(g.player), Melee.NoFighterThere):
+        if not isinstance((melee_action := Melee(self.direction)).check(g.player()), Melee.NoFighterThere):
             PlayerDo(melee_action)()
             return
         else:

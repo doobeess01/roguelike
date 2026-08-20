@@ -19,7 +19,7 @@ def ai_choose_action(actor: Entity) -> Action:
 
     if IsHostile in actor.tags:
         actor_position = actor.components[Position]
-        path_to_target = find_path_to(start=actor_position, end=g.player.components[Position])
+        path_to_target = find_path_to(start=actor_position, end=g.player().components[Position])
         if path_to_target:
             next_position = path_to_target[0]
             direction = next_position - actor_position

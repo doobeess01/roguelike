@@ -22,7 +22,7 @@ def render_message_log(x: int, y: int, rows: int):
 
 
 def render_map(screen_shape: tuple[int, int]):
-    player_pos = g.player.components[Position]
+    player_pos = g.player().components[Position]
 
     map_ = player_pos.map_
     map_shape = map_.components[MapShape]

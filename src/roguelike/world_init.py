@@ -16,7 +16,7 @@ def initialize_world():
     map_ = generate_map()
 
     # Add player
-    g.player = g.registry.new_entity(
+    player = g.registry.new_entity(
         components={
             Name: 'player',
             Position: Position(5,5, map_),
@@ -40,7 +40,7 @@ def initialize_world():
     )
 
     g.simulation = Simulation()
-    g.simulation.add_actor(g.player)
+    g.simulation.add_actor(player)
     g.simulation.add_actor(kobold)
 
     g.message_log = MessageLog()
