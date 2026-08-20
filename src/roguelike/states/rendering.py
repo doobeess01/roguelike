@@ -9,8 +9,8 @@ from ..components import Position, Graphic
 
 
 def main_game_render():
-    camera_ij = render_map((39, 60))  # Renders at 0-38 x, 0-59 y with C order
-    render_entities(camera_ij)
+    screen_shape = (39, 60)
+    render_map(screen_shape)  # Renders at 0-38 x, 0-59 y with C order
     render_message_log(0, 40, 10)
     g.console.print(0,39,'─'*80)
 
@@ -22,6 +22,8 @@ def render_message_log(x: int, y: int, rows: int):
 
 
 def render_map(screen_shape: tuple[int, int]):
+    # Render tiles
+
     player_pos = g.player().components[Position]
 
     map_ = player_pos.map_
@@ -33,10 +35,8 @@ def render_map(screen_shape: tuple[int, int]):
 
     g.console.rgb[screen_slice] = TILE_DATA[map_.components[Tiles][world_slice]]["graphic"]
 
-    return camera_ij
+    # Render entities
 
-
-def render_entities(camera_ij: tuple[int, int]):
     rendered_offset = vector_from_tuple(camera_ij, ij=True)
 
     for entity in g.registry.Q.all_of(components=[Position, Graphic]):

@@ -1,17 +1,19 @@
 from tcod.event import Event, Quit, KeyDown
 
 from . import g
-from .keybindings import KEYBINDINGS
+from .keybindings import get_keybindings
 
 
 def handle_tcod_event(event: Event):
+    state = g.state_manager.state
+
     match event:
         case Quit():
             raise SystemExit
-        case KeyDown(sym=sym) if type(g.state_manager.state) in KEYBINDINGS:
-            keybindings = KEYBINDINGS[type(g.state_manager.state)]
+        case KeyDown(sym=sym):
+            keybindings = get_keybindings(state)
             if (key_name := sym.label.lower()) in keybindings:
                 action_str = keybindings[key_name]
-                g.state_manager.state.execute_action(action_str)
+                state.execute_action(action_str)
         case _:
             pass

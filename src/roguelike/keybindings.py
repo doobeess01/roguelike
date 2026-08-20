@@ -1,9 +1,15 @@
 from tcod.event import KeySym as K
 
 from .state import State
-from .states import MainMenu, Game
+from .states import Game, Menu
 
-
+def get_keybindings(state: State) -> dict[str, str]:
+    keybindings_sets = (KEYBINDINGS[state_type] for state_type in type(state).__mro__ if state_type in KEYBINDINGS)
+    keybindings: dict[str, str] = {}
+    for keybindings_set in keybindings_sets:
+        keybindings |= keybindings_set
+    return keybindings
+    
 def name(sym: K):
     return sym.label.lower()
 
@@ -24,11 +30,14 @@ for direction, syms in DIRECTIONS_TO_KEYSYMS.items():
         KEYNAMES_TO_DIRECTIONS[name(sym)] = direction
 
 
+
 KEYBINDINGS: dict[type[State], dict[str, str]] = {}
 
 
-KEYBINDINGS[MainMenu] = {
-    name(K.RETURN): MainMenu.BEGIN,
+KEYBINDINGS[Menu] = {
+    name(K.UP): Menu.CURSOR_UP,
+    name(K.DOWN): Menu.CURSOR_DOWN,
+    name(K.RETURN): Menu.SELECT,
 }
 
 
