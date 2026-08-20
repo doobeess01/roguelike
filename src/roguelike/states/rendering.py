@@ -18,7 +18,7 @@ def main_game_render():
 def render_message_log(x: int, y: int, rows: int):
     messages = g.message_log.get_messages(rows)
     for i, message in enumerate(messages):
-        g.console.print(x, y+i, message.text, fg=message.fg, bg=message.bg)
+        message.text_with_count.print(x, y+i)
 
 
 def render_map(screen_shape: tuple[int, int]):
